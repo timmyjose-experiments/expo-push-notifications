@@ -11,8 +11,13 @@ const Home = () => {
     <View style={styles.container}>
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate('Demo')}>
-        <Text>Demo</Text>
+        onPress={() => navigation.navigate('Calculator')}>
+        <Text>Calculator</Text>
+      </Pressable>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate('Registration')}>
+        <Text>Register</Text>
       </Pressable>
     </View>
   )

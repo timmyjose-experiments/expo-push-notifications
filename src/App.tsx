@@ -1,23 +1,30 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from './screens/Home'
-import Demo from './screens/Demo'
+import Calculator from './screens/Calculator'
+import Registration from './screens/Registration'
+import { Provider } from 'react-redux'
+import { store } from './store/store'
 
 export type RootStackParamList = {
   Home: undefined
-  Demo: undefined
+  Calculator: undefined
+  Registration: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='Demo' component={Demo} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name='Home' component={Home} />
+          <Stack.Screen name='Calculator' component={Calculator} />
+          <Stack.Screen name='Registration' component={Registration} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   )
 }
 

@@ -4,8 +4,9 @@ import Home from './screens/Home'
 import Calculator from './screens/Calculator'
 import Registration from './screens/Registration'
 import { Provider } from 'react-redux'
-import { store } from './store/store'
+import { persistor, store } from './store/store'
 import * as Notifications from 'expo-notifications'
+import { PersistGate } from 'redux-persist/integration/react'
 
 // set up global push notifications handler
 Notifications.setNotificationHandler({
@@ -27,13 +28,15 @@ const Stack = createNativeStackNavigator<RootStackParamList>()
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name='Home' component={Home} />
-          <Stack.Screen name='Calculator' component={Calculator} />
-          <Stack.Screen name='Registration' component={Registration} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name='Home' component={Home} />
+            <Stack.Screen name='Calculator' component={Calculator} />
+            <Stack.Screen name='Registration' component={Registration} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   )
 }

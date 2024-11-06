@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 5,
     height: 40,
-    width: '10%',
+    width: '25%',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderColor: '#c0c0c0',
     height: 40,
-    width: '45%',
+    width: '75%',
     paddingLeft: 5,
     alignItems: 'flex-start',
     justifyContent: 'flex-start'

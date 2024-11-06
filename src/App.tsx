@@ -5,6 +5,16 @@ import Calculator from './screens/Calculator'
 import Registration from './screens/Registration'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
+import * as Notifications from 'expo-notifications'
+
+// set up global push notifications handler
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false
+  })
+})
 
 export type RootStackParamList = {
   Home: undefined

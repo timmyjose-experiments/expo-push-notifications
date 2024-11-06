@@ -17,7 +17,7 @@ const Home = () => {
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate('Registration')}>
-        <Text>Register</Text>
+        <Text>Registration</Text>
       </Pressable>
     </View>
   )

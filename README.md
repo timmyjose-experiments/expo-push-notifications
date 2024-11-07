@@ -68,16 +68,17 @@ Push Notifications.
     - Android [✅]
 
 * App in foreground [✅]
-    - iOS []
-    - Android []
+    - iOS [✅]
+    - Android [✅]
 
 * App closed []
-    - iOS []
-    - Android []
+    - iOS [✅]
+    - Android [❌]  (Oppo A7, Android 8.1)
+        (possibly model/OS specific as well: https://docs.expo.dev/push-notifications/receiving-notifications/#closed-notification-behavior)
 
 * App uninstalled and reinstalled []
-    - iOS []
-    - Android []
+    - iOS [✅] (registering agin gives same expo push token)
+    - Android [⚠️] (registering again gives different expo push token)
 
 
 #### Production

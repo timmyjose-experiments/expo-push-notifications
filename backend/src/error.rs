@@ -32,7 +32,6 @@ impl ResponseError for Error {
 
     fn error_response(&self) -> actix_web::HttpResponse {
         let err_msg = self.to_string();
-        println!("About to send error message: {err_msg:#?}");
         HttpResponse::build(self.status_code()).json(json!({"error": err_msg}))
     }
 }

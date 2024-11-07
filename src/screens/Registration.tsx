@@ -8,6 +8,7 @@ import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
 import { useDispatch, useSelector } from 'react-redux'
 import { getExpoPushToken, isRegistered, setExpoPushToken, unsetExpoPushToken } from '../store/registrationSlice'
+import { registerDevice, unregisterDevice } from '../gateway'
 
 const handleRegistrationError = (err: string) => {
   alert(err)
@@ -56,6 +57,11 @@ const Registration = () => {
 
         // store the expo push token in persistent storage
         dispatch(setExpoPushToken( expoPushToken))
+
+        // register on the backend
+        await registerDevice({
+          deviceId: expoPushToken
+        })
       } catch (err: any) {
         handleRegistrationError(`${err}`)
       }
@@ -68,7 +74,9 @@ const Registration = () => {
   // useful while testing
   const handleUnregistration = async () => {
     dispatch(unsetExpoPushToken())
-    // todo - server call to remove device
+    await unregisterDevice({
+      deviceId: expoPushToken
+    })
   }
 
   return(

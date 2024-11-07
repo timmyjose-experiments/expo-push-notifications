@@ -6,20 +6,63 @@ use crate::{
     calc::{add, div, mul, sub},
     error::{Error, HttpResult},
     notifications::notify_device,
-    AppState,
+    AppState, DB,
 };
 
+#[derive(Debug, Deserialize)]
+struct RegisterDeviceRequest {
+    #[serde(rename = "deviceId")]
+    device_id: String,
+}
+
+#[derive(Debug, Serialize)]
+pub struct RegisterDeviceResponse {
+    registered: bool,
+}
+
 #[post("/register-device")]
-pub async fn register_device() -> impl Responder {
-    info!("register_device");
-    HttpResponse::Ok().body("register_device")
+pub async fn register_device(
+    body: web::Json<RegisterDeviceRequest>,
+) -> HttpResult<web::Json<RegisterDeviceResponse>> {
+    info!("register_device, body={body:#?}");
+
+    let device_id = body.device_id.clone();
+    let mut db = DB.write().await;
+    db.insert(device_id);
+    info!("device {:#?} registered", body.device_id);
+
+    Ok(web::Json(RegisterDeviceResponse { registered: true }))
 }
 
 // useful for testing
+#[derive(Debug, Deserialize)]
+struct UnregisterDevicerRequest {
+    #[serde(rename = "deviceId")]
+    device_id: String,
+}
+
+#[derive(Debug, Serialize)]
+pub struct UnregisterDeviceResponse {
+    unregistered: bool,
+}
+
 #[post("/unregister-device")]
-pub async fn unregister_device() -> impl Responder {
-    info!("unregister_device");
-    HttpResponse::Ok().body("unregister_device")
+pub async fn unregister_device(
+    body: web::Json<UnregisterDevicerRequest>,
+) -> HttpResult<web::Json<UnregisterDeviceResponse>> {
+    info!("unregister_device, body={body:#?}");
+
+    let device_id = body.device_id.clone();
+
+    let mut db = DB.write().await;
+    if !db.contains(&device_id) {
+        return Err(Error::DeviceNotRegistered(device_id));
+    }
+
+    db.remove(&device_id);
+    info!("device {:#?} unregistered", body.device_id);
+
+    Ok(web::Json(UnregisterDeviceResponse { unregistered: true }))
 }
 
 // useful for testing

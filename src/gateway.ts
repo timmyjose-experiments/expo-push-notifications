@@ -16,13 +16,29 @@ const send = async (url: string, req: any): Promise<any> => {
   })
 }
 
-export const registerDevice = async (req: any) => {
+export interface RegisterDeviceRequest {
+  deviceId: string
+}
+
+export interface RegisterDeviceResponse {
+  registrered: boolean
+}
+
+export const registerDevice = async (req: RegisterDeviceRequest): Promise<RegisterDeviceResponse> => {
   const registerDeviceUrl = `${BACKEND_SERVER_URL}/register-device`
   return await send(registerDeviceUrl, req)
 }
 
 // useful for testing
-export const unregisterDevice = async (req: any) => {
+export interface UnregisterDeviceRequest {
+  deviceId: string
+}
+
+export interface UnregisterDeviceResponse {
+  unregiestered: boolean
+}
+
+export const unregisterDevice = async (req: UnregisterDeviceRequest): Promise<UnregisterDeviceResponse> => {
   const unregisterDeviceUrl = `${BACKEND_SERVER_URL}/unregister-device`
   return await send(unregisterDeviceUrl, req)
 }

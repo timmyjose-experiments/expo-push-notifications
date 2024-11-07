@@ -13,19 +13,22 @@ Functionality:
 
 ### Backend
 
-DB:
+`ngrok`:
 
 ```
-$ cp .env.development .env
+$ ngrok http http://localhost:9871
 ```
 
-and update `username` and `password` in the `.env` file.
+Replace the url in `.env.local` with the url in the `ngrok` output.
+
+Run the backend:
 
 ```
-$ diesel setup
+$ cd backend
+$ RUST_LOG=INFo cargo run --release
 ```
 
-
+This will start a server at `0.0.0.0:9871`.
 
 
 ### App

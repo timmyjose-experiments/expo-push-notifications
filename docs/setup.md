@@ -15,3 +15,9 @@
     https://docs.expo.dev/push-notifications/sending-notifications/#send-push-notifications-using-a-server
 
 * Error Handling - https://docs.expo.dev/push-notifications/sending-notifications/#implement-push-notifications-reliably
+
+
+## Notes
+
+* On `iOS`, the same `expo` push token is generated, even after app reinstall.
+  On `Android`, app uninstall followed by reinstall generates a different `expo` push token.

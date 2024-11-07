@@ -8,7 +8,7 @@ import { persistor, store } from './store/store'
 import * as Notifications from 'expo-notifications'
 import { PersistGate } from 'redux-persist/integration/react'
 
-// set up global push notifications handler
+// set up foreground push notifications
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,

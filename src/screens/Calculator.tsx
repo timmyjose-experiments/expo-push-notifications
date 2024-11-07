@@ -3,39 +3,50 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../App'
 import { Pressable, Text, TextInput, View } from 'react-native'
 import styles from '../styles'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { calculate } from '../gateway'
+import { useSelector } from 'react-redux'
+import { getExpoPushToken, isRegistered } from '../store/registrationSlice'
 
 const Calculator = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-  const [x, setX] = useState<number | null>(null)
-  const [y, setY] = useState<number | null>(null)
+  const [x, setX] = useState<number>(0.0)
+  const [y, setY] = useState<number>(0.0)
+
+  const registered = useSelector(isRegistered)
+  const deviceId = useSelector(getExpoPushToken)
+
+  useEffect(() => {
+    if (!registered) {
+      navigation.navigate('Registration')
+    }
+  }, [registered])
 
   const handleAdd = async () => {
     try {
-      await calculate({ op: 'add', x, y })
+      await calculate({ op: 'add', x, y, deviceId })
     } catch (err: any) {
     }
   }
 
   const handleSub = async () => {
     try {
-      await calculate({ op: 'sub', x, y })
+      await calculate({ op: 'sub', x, y, deviceId })
     } catch (err: any) {
     }
   }
 
   const handleMul = async () => {
     try {
-      await calculate({ op: 'mul', x, y })
+      await calculate({ op: 'mul', x, y, deviceId })
     } catch (err: any) {
     }
   }
 
   const handleDiv = async () => {
     try {
-      await calculate({ op: 'div', x, y })
+      await calculate({ op: 'div', x, y, deviceId })
     } catch (err: any) {
     }
   }

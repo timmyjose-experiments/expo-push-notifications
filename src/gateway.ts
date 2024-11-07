@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { BACKEND_SERVER_URL } from './constants'
 
-const send = async (url: string, req: any): Promise<any> => {
+const send = async (url: string, req?: any): Promise<any> => {
   return await axios.post(url, JSON.stringify(req), {
     headers: {
       'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const unregisterDevice = async (req: UnregisterDeviceRequest): Promise<Un
 
 export const notifyAllDevices = async () => {
   const notifyAllDevicesUrl = `${BACKEND_SERVER_URL}/notify-all-devices`
-  return await send(notifyAllDevicesUrl, {})
+  return await send(notifyAllDevicesUrl)
 }
 
 export type Op = 'add' | 'sub' | 'mul' | 'div'

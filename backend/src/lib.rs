@@ -6,6 +6,7 @@ use config::Config;
 use expo_push_notification_client::{Expo, ExpoClientOptions};
 use handlers::{calculate, notify_all_devices, register_device, unregister_device};
 use lazy_static::lazy_static;
+use serde::Deserialize;
 use std::{collections::HashSet, sync::Arc};
 use tokio::sync::RwLock;
 
@@ -16,8 +17,21 @@ pub mod error;
 pub mod handlers;
 mod notifications;
 
+#[derive(Debug, Deserialize)]
+pub(crate) struct Quote {
+    quote: String,
+    author: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Quotes {
+    quotes: Vec<Quote>,
+}
+
 lazy_static! {
     pub static ref DB: RwLock<HashSet<String>> = RwLock::new(HashSet::new());
+    // source: https://gist.github.com/nasrulhazim/54b659e43b1035215cd0ba1d4577ee80
+    pub static ref QUOTES: Quotes= serde_json::from_str(include_str!("./quotes.json")).unwrap();
 }
 
 struct AppState {

@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { persistor, store } from './store/store'
 import * as Notifications from 'expo-notifications'
 import { PersistGate } from 'redux-persist/integration/react'
+import Quotes from './screens/Quotes'
 
 // set up foreground push notifications
 Notifications.setNotificationHandler({
@@ -20,6 +21,7 @@ Notifications.setNotificationHandler({
 export type RootStackParamList = {
   Home: undefined
   Calculator: undefined
+  Quotes: undefined 
   Registration: undefined
 }
 
@@ -33,6 +35,7 @@ const App = () => {
           <Stack.Navigator>
             <Stack.Screen name='Home' component={Home} />
             <Stack.Screen name='Calculator' component={Calculator} />
+            <Stack.Screen name='Quotes' component={Quotes} />
             <Stack.Screen name='Registration' component={Registration} />
           </Stack.Navigator>
         </NavigationContainer>

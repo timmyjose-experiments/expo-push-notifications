@@ -1,12 +1,11 @@
-use actix_web::{post, web, HttpResponse, Responder};
+use actix_web::{post, web};
 use log::info;
 use serde::{Deserialize, Serialize};
 
 use crate::{
     calc::{add, div, mul, sub},
     error::{Error, HttpResult},
-    notifications::notify_device,
-    AppState, DB,
+    notifications, AppState, DB,
 };
 
 #[derive(Debug, Deserialize)]
@@ -65,11 +64,17 @@ pub async fn unregister_device(
     Ok(web::Json(UnregisterDeviceResponse { unregistered: true }))
 }
 
+#[derive(Debug, Serialize)]
+pub struct NotifyAllDevicesResponse;
+
 // useful for testing
 #[post("/notify-all-devices")]
-pub async fn notify_all_devices() -> impl Responder {
+pub async fn notify_all_devices(
+    state: web::Data<AppState>,
+) -> HttpResult<web::Json<NotifyAllDevicesResponse>> {
     info!("notify_all_devices");
-    HttpResponse::Ok().body("notify_all_devices")
+    notifications::notify_all_devices(&state.expo_notifications_client).await?;
+    Ok(web::Json(NotifyAllDevicesResponse))
 }
 
 #[derive(Debug, Deserialize)]
@@ -115,7 +120,8 @@ pub async fn calculate(
             Op::Div => div(x, y).await,
         };
 
-        notify_device(&state.expo_notifications_client, op, x, y, res, device_id).await?;
+        notifications::notify_device(&state.expo_notifications_client, op, x, y, res, device_id)
+            .await?;
         Ok(web::Json(CalculateResponse))
     } else {
         Err(Error::MissingDevice)

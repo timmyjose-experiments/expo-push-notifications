@@ -55,19 +55,19 @@ Push Notifications.
 
 #### Dev
 
-* Server to a specific device []
-    - iOS []
-    - Android []
+* Server to a specific device [✅]
+    - iOS [✅]
+    - Android [✅]
 
-* Sending to multiple devices []
-   - iOS []
-   - Android[]
+* Sending to multiple devices [✅]
+   - iOS []✅
+   - Android[✅
 
-* App in background []
-    - iOS []
-    - Android []
+* App in background [✅]
+    - iOS [✅]
+    - Android [✅]
 
-* App in foreground []
+* App in foreground [✅]
     - iOS []
     - Android []
 

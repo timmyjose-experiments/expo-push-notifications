@@ -11,6 +11,7 @@ use tokio::sync::RwLock;
 mod calc;
 mod db;
 pub mod error;
+mod expo_notification_client;
 pub mod handlers;
 mod notifications;
 

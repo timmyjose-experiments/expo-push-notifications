@@ -10,8 +10,10 @@ const send = async (url: string, req?: any): Promise<any> => {
   }).catch((err: any) => {
       if (err.response && err.response.data && 'error' in err.response.data) {
         alert(err.response.data.error)
-      } else {
+      } else if (err.response) {
         alert(err.response.data)
+      } else {
+        console.error(JSON.stringify(err, null, 2))
       }
   })
 }
